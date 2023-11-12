@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include "Cipher.hpp"
+
 int main()
 {
     std::string input;
