@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.8)
 set (This Data_Encryption_Tests)
 
 set(Sources
-    CaesarCipherTests.cpp
+    Data_Encryption_Tests.cpp
 )
 
 add_executable(${This} ${Sources})
