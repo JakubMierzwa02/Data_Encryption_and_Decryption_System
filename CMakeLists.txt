@@ -16,10 +16,15 @@ set(Headers
     Encryptor.hpp
     Decryptor.hpp
     CaesarCipher.hpp
+    XORCipher.hpp
+    VigenereCipher.hpp
+    VernamCipher.hpp
+    CLIInterface.hpp
 )
 
 set(Sources
     main.cpp
+    CLIInterface.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
