@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "..\CaesarCipher.hpp"
 #include "..\XORCipher.hpp"
+#include "..\VigenereCipher.hpp"
 
 TEST(CaesarCipherTest, Encrypt)
 {
@@ -33,4 +34,20 @@ TEST(XORCipherTest, Decrypt)
     std::string encryptedText = "YW_]]";
     std::string decryptedText = cipher.decrypt(encryptedText);
     ASSERT_EQ("hello", decryptedText);
+}
+
+TEST(VigenereCipherTest, Encrypt)
+{
+    VigenereCipher cipher("KEY");
+    std::string originalText = "HELLOWORLD";
+    std::string encryptedText = cipher.encrypt(originalText);
+    ASSERT_EQ("RIJVSUYVJN", encryptedText);
+}
+
+TEST(VigenereCipherTest, Decrypt)
+{
+    VigenereCipher cipher("KEY");
+    std::string encryptedText = "RIJVSUYVJN";
+    std::string decryptedText = cipher.decrypt(encryptedText);
+    ASSERT_EQ("HELLOWORLD", decryptedText);
 }
