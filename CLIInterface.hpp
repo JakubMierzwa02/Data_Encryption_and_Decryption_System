@@ -14,6 +14,7 @@ private:
 
     void displayMenu();
     std::string getUserInput(const std::string& prompt);
+    std::unique_ptr<Cipher> createCipherInstance(const std::string& algorithm, const std::string& key);
     void performEncryption();
     void performDecryption();
 
