@@ -1,9 +1,15 @@
 #include "CLIInterface.hpp"
 #include "CaesarCipher.hpp"
+#include "XORCipher.hpp"
+#include "VigenereCipher.hpp"
+#include "VernamCipher.hpp"
 
 CLIInterface::CLIInterface()
 {
     ciphers["Caesar"] = std::make_unique<CaesarCipher>(3);
+    ciphers["XOR"] = std::make_unique<XORCipher>("key");
+    ciphers["Vigenere"] = std::make_unique<VigenereCipher>("key");
+    ciphers["Vernam"] = std::make_unique<VernamCipher>("key");
 }
 
 void CLIInterface::displayMenu()
@@ -12,6 +18,7 @@ void CLIInterface::displayMenu()
     std::cout << "1. Encryption\n";
     std::cout << "2. Decryption\n";
     std::cout << "3. Exit\n";
+    std::cout << "Available algorithms: Caesar, XOR, Vigenere, Vernam\n";
 }
 
 std::string CLIInterface::getUserInput(const std::string& prompt)
@@ -24,7 +31,7 @@ std::string CLIInterface::getUserInput(const std::string& prompt)
 
 void CLIInterface::performEncryption()
 {
-    std::string algorithm = getUserInput("Select algorithm (Caesar, ...): ");
+    std::string algorithm = getUserInput("Select algorithm (Caesar, XOR, Vigenere, Vernam): ");
     std::string text = getUserInput("Enter the text to be encrypted: ");
     std::string encrypted = ciphers[algorithm]->encrypt(text);
     std::cout << "Encrypted text: " << encrypted << std::endl;
@@ -32,7 +39,7 @@ void CLIInterface::performEncryption()
 
 void CLIInterface::performDecryption()
 {
-    std::string algorithm = getUserInput("Select algorithm (Caesar, ...): ");
+    std::string algorithm = getUserInput("Select algorithm (Caesar, XOR, Vigenere, Vernam): ");
     std::string text = getUserInput("Enter the text to be decrypted: ");
     std::string decrypted = ciphers[algorithm]->decrypt(text);
     std::cout << "Decrypted text: " << decrypted << std::endl;
