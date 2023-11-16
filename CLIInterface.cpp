@@ -17,7 +17,9 @@ void CLIInterface::displayMenu()
     std::cout << "Select:\n";
     std::cout << "1. Encryption\n";
     std::cout << "2. Decryption\n";
-    std::cout << "3. Exit\n";
+    std::cout << "3. Encryption from file\n";
+    std::cout << "4. Decryption from file\n";
+    std::cout << "5. Exit\n";
     std::cout << "Available algorithms: Caesar, XOR, Vigenere, Vernam\n";
 }
 
@@ -77,6 +79,58 @@ void CLIInterface::performDecryption()
         std::cout << "Unknown algorithm" << std::endl;
 }
 
+void CLIInterface::performEncryptionFromFile()
+{
+    std::string algorithm = getUserInput("Select algorithm (Caesar, XOR, Vigenere, Vernam): ");
+    std::string key = getUserInput("Enter the key: ");
+    std::string filename = getUserInput("Enter the file name: ");
+
+    auto cipher = createCipherInstance(algorithm, key);
+    if (cipher)
+    {
+        std::string fileContent = readFromFile(filename);
+        std::string encrypted = cipher->encrypt(fileContent);
+        std::string outputFilename = getUserInput("Enter the output file name: ");
+        writeToFile(outputFilename, encrypted);
+        std::cout << "The encrypted data was saved to a file: " << outputFilename << std::endl;
+    }
+    else
+        std::cout << "Unknown algorithm" << std::endl;
+}
+
+void CLIInterface::performDecryptionFromFile()
+{
+    std::string algorithm = getUserInput("Select algorithm (Caesar, XOR, Vigenere, Vernam): ");
+    std::string key = getUserInput("Enter the key: ");
+    std::string filename = getUserInput("Enter the file name: ");
+
+    auto cipher = createCipherInstance(algorithm, key);
+    if (cipher)
+    {
+        std::string fileContent = readFromFile(filename);
+        std::string decrypted = cipher->decrypt(fileContent);
+        std::string outputFilename = getUserInput("Enter the output file name: ");
+        writeToFile(outputFilename, decrypted);
+        std::cout << "The decrypted data was saved to a file: " << outputFilename << std::endl;
+    }
+    else
+        std::cout << "Unknown algorithm" << std::endl;
+}
+
+std::string CLIInterface::readFromFile(const std::string& filename)
+{
+    std::ifstream file(filename);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
+}
+
+void CLIInterface::writeToFile(const std::string& filename, const std::string& data)
+{
+    std::ofstream file(filename);
+    file << data;
+}
+
 void CLIInterface::run()
 {
     while (true)
@@ -88,6 +142,10 @@ void CLIInterface::run()
         else if (choice == "2")
             performDecryption();
         else if (choice == "3")
+            performEncryptionFromFile();
+        else if (choice == "4")
+            performDecryptionFromFile();
+        else if (choice == "5")
             break;
         else
             std::cout << "Invalid input. Try again\n";
